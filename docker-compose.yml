@@ -1,0 +1,51 @@
+version: '3.3'
+
+services:
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:4.0.8
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-volume:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 39411434
+      MONGO_INITDB_DATABASE: hyperativa
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+
+  nosqlclient:
+    container_name: nosqlclient
+    image: mongoclient/mongoclient
+    restart: on-failure
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URL: 'mongodb://mongodb:27017/hyperativa'
+    volumes:
+      - nosqlclient-volume:/data/db
+    ports:
+      - '3000:3000'
+
+  hyperatyva_app:
+    container_name: hyperativa_app
+    image: hyperativa_image
+    restart: on-failure
+    build:
+      context: .
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/desafio_hyperativa
+    ports:
+      - '8080:80'
+    environment:
+      DBAAS_MONGODB_ENDPOINT: 'mongodb://mongodb:27017/hyperativa'
+      DATABASE_NAME: 'credit_card'
+    command: python
+
+volumes:
+  mongodb-volume:
+  nosqlclient-volume:
