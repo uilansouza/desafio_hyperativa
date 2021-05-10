@@ -16,10 +16,9 @@ def required_web_token_authorize(f):
     @wraps(f)
     def verify_token(*args, **kwargs):
         logger_config.get_logger()
-        print("request", request.headers)
-        if not request.args.get("card_token"):
+        token = request.headers["authorization"].replace("Bearer", "").strip()
+        if not token:
             raise Unauthorized()
-        token = request.args.get("card_token")
         try:
             decode_token.get_token(token)
             return f(*args, **kwargs)

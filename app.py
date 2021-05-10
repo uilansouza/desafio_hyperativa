@@ -16,7 +16,7 @@ from flask import (
     render_template,
 )
 from decorator.token_web_authorize_jwt import required_web_token_authorize
-from controllers import (ApiAuthController)
+from controllers import (ApiAuthController, ApiCardController)
 from controllers.ApiUserController import ApiUserController
 from controllers.commons import (log_api_request,format_success_response)
 
@@ -30,10 +30,19 @@ def hello():
     return jsonify({"message": "Bem vindo Desafio Hypercriativa"})
 
 
-@app.route('/card', methods=['GET'])
+@app.route('/card', methods=['GET','POST'])
 @required_web_token_authorize
 def card():
+
+    # logger.debug(f'AUTH - HTTP_CODE: {http_code}')
+    # response = app.response_class(
+    #     response=json_payload,
+    #     status=http_code,
+    #     mimetype='application/json'
+    # )
+    # return response
     return jsonify({"message": "Validos"})
+
 
 
 

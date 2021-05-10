@@ -47,6 +47,7 @@ services:
       MONGODB_USER: 'root'
       MONGODB_PASSWORD: '39411434'
       MONGODB_DATABASE: 'hyperativa'
+      MINUTES: 180
       DBAAS_MONGODB_ENDPOINT: mongodb://root:39411434@mongodb:27017/hyperativa?authSource=admin
       PORT: 8888
       command: python app.py
