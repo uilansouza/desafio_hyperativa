@@ -1,6 +1,5 @@
 from model import Mongo
 from bson.objectid import ObjectId
-import pytz
 import os
 
 class User:

@@ -14,7 +14,7 @@ from controllers.commons import(
 
 # --------------------
 
-def  process(request):
+def  process_login(request):
 
     payload = request.get_json()
     if not payload:
@@ -32,7 +32,15 @@ def  process(request):
         )
         return code, json_payload
 
-    user = ApiUserController().find_user(payload)
+    if not ApiUserController().get_user(payload):
+        code, json_payload = format_error_response(
+            404,
+            'Bad Request​',
+            'username not found',
+        )
+        return code, json_payload
+
+    user = ApiUserController().get_user(payload)
     username = payload['username']
     password = payload['password']
 
@@ -54,30 +62,4 @@ def  process(request):
     data = {"id": user['username'], "token":token}
     code, json_payload = format_success_response(200, data)
     return code, json_payload
-    #
-    #
-    # check_password_hash(password, user['password'])
-    #
-    #
-    # if  1>2:
-    #     new_token = create_session_token(
-    #         client_id, client['uuid'], timedelta(days=1), db)
-    # else:
-    #     code, json_payload = format_error_response(
-    #         422,
-    #         'Unprocessable Entity​​',
-    #         'client_id and/or client_secret not known.'
-    #     )
-    #     return code, json_payload, client_id
-    #
-    # if not is_client_status_ok(client_id, db):
-    #     code, json_payload = format_error_response(
-    #         401,
-    #         'Unauthorized',
-    #         'Inactive client or invalid contract.'
-    #     )
-    #     return code, json_payload, client_id
-    # expiration = 60 * 60 * 24 # one day, in seconds
-    # data = {'client_id':client_id, 'session_token': new_token, 'expires_in': expiration}
-    # code, json_payload = format_success_response(200, data)
-    # return code, json_payload, client_id
+

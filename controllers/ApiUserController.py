@@ -8,7 +8,7 @@ class ApiUserController:
     def __init__(self):
         self.user = User()
 
-    def insert_user(self,request):
+    def post_user(self, request):
 
         payload = request.get_json()
         if not payload:
@@ -20,6 +20,6 @@ class ApiUserController:
         payload['password'] = generate_password_hash(payload['password'])
         return self.user.insert_user(payload)
 
-    def find_user(self, data):
+    def get_user(self, data):
        return self.user.find_user({"username": data['username']})
 

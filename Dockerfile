@@ -9,5 +9,8 @@ COPY . /desafio_hyperativa
 WORKDIR /desafio_hyperativa
 
 # Install requirements
+EXPOSE 8888
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+CMD python app.py
