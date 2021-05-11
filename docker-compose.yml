@@ -34,7 +34,7 @@ services:
     image: hyperativa_image
     restart: on-failure
     build:
-      context: .
+      context: ""
     depends_on:
       - mongodb
     volumes:
@@ -51,7 +51,7 @@ services:
       DBAAS_MONGODB_ENDPOINT: mongodb://root:39411434@mongodb:27017/hyperativa?authSource=admin
       PORT: 8888
       DIGITS: 16
-      command: python app.py
+      command: ../python run.py
 
 
 volumes:
