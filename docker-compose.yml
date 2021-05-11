@@ -50,7 +50,9 @@ services:
       MINUTES: 180
       DBAAS_MONGODB_ENDPOINT: mongodb://root:39411434@mongodb:27017/hyperativa?authSource=admin
       PORT: 8888
+      DIGITS: 16
       command: python app.py
+
 
 volumes:
   mongodb-volume:
