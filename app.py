@@ -18,7 +18,7 @@ from flask import (
 from decorator.token_web_authorize_jwt import required_web_token_authorize
 from controllers import (ApiAuthController, ApiCardController)
 from controllers.ApiUserController import ApiUserController
-from controllers.commons import (log_api_request,format_success_response)
+from controllers.commons import (format_success_response)
 
 app = Flask(__name__)
 logger_config.configure_logger(app, __name__)
@@ -30,18 +30,31 @@ def hello():
     return jsonify({"message": "Bem vindo Desafio Hypercriativa"})
 
 
-@app.route('/card', methods=['GET','POST'])
+@app.route('/card', methods=['POST'])
 @required_web_token_authorize
 def card():
+        http_code, json_payload = ApiCardController.post_card(request)
+        logger.debug(f'AUTH - HTTP_CODE: {http_code}')
+        response = app.response_class(
+            response=json_payload,
+            status=http_code,
+            mimetype='application/json'
+        )
+        return response
 
-    # logger.debug(f'AUTH - HTTP_CODE: {http_code}')
-    # response = app.response_class(
-    #     response=json_payload,
-    #     status=http_code,
-    #     mimetype='application/json'
-    # )
-    # return response
-    return jsonify({"message": "Validos"})
+@app.route("/card/<id>", methods=['GET'])
+@required_web_token_authorize
+def get_one_card(id):
+    http_code, json_payload = ApiCardController.get_card(id)
+    logger.debug(f'AUTH - HTTP_CODE: {http_code}')
+    response = app.response_class(
+        response=json_payload,
+        status=http_code,
+        mimetype='application/json'
+    )
+    return response
+
+
 
 
 

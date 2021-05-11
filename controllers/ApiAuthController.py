@@ -1,7 +1,9 @@
+import logging
 from datetime import timedelta
 import jwt
 import datetime
 import os
+import logger_config
 from controllers.ApiUserController import ApiUserController
 from controllers.commons import(
     generate_hash_password,
@@ -15,7 +17,7 @@ from controllers.commons import(
 # --------------------
 
 def  process_login(request):
-
+    logger = logger_config.get_logger()
     payload = request.get_json()
     if not payload:
         code, json_payload = format_error_response(
@@ -61,5 +63,6 @@ def  process_login(request):
     token = jwt.encode(payload_jwt, os.environ.get('SECRET'), algorithm="HS256")
     data = {"id": user['username'], "token":token}
     code, json_payload = format_success_response(200, data)
+    logger.info(f" Login - User authentication success")
     return code, json_payload
 
