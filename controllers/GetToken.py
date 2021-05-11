@@ -1,7 +1,5 @@
 import os
 import jwt
-import datetime
-import logger_config
 
 class GetToken:
     def __init__(self):

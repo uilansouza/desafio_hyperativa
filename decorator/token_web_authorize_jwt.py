@@ -1,6 +1,3 @@
-import os
-import base64
-
 from functools import wraps
 from flask import request, abort
 from werkzeug.exceptions import Unauthorized

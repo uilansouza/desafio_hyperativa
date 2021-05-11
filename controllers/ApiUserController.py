@@ -1,6 +1,4 @@
 
-import requests
-import json
 from model.Usuario import User
 from controllers.commons import check_password_hash,generate_password_hash
 import logger_config
@@ -25,4 +23,3 @@ class ApiUserController:
        logger = logger_config.get_logger()
        logger.info(f" User - Get - User  success")
        return self.user.find_user({"username": data['username']})
-

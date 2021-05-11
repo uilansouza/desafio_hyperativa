@@ -1,6 +1,5 @@
 from model import Mongo
-from bson.objectid import ObjectId
-import os
+
 
 class Card:
     def __init__(self):

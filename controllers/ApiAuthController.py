@@ -6,11 +6,8 @@ import os
 import logger_config
 from controllers.ApiUserController import ApiUserController
 from controllers.commons import(
-    generate_hash_password,
     verify_password,
-    check_password_hash,
-    # is_client_status_ok,
-    format_error_response,
+     format_error_response,
     format_success_response
 )
 
@@ -57,7 +54,7 @@ def  process_login(request):
     payload_jwt = {
         "id": 1,
         "username": username,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=180)
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=int(os.getenv("MINUTES")))
     }
 
     token = jwt.encode(payload_jwt, os.environ.get('SECRET'), algorithm="HS256")
@@ -65,4 +62,3 @@ def  process_login(request):
     code, json_payload = format_success_response(200, data)
     logger.info(f" Login - User authentication success")
     return code, json_payload
-

@@ -90,12 +90,3 @@ def get_card(number_card):
     code, json_payload = format_success_response(200, data)
     logger.info('Card - Get card successfully')
     return code, json_payload
-
-
-
-
-
-
-
-
-

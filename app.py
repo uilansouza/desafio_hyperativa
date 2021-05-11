@@ -1,24 +1,14 @@
 import os
-import flask
-import pymongo
-import datetime
-import base64
-import jwt
-
 import logger_config
-from decorator.token_web_authorize_jwt import required_web_token_authorize
 from flask import (
     Flask,
     request,
     jsonify,
-    redirect,
-    url_for,
-    render_template,
+
 )
 from decorator.token_web_authorize_jwt import required_web_token_authorize
 from controllers import (ApiAuthController, ApiCardController)
 from controllers.ApiUserController import ApiUserController
-from controllers.commons import (format_success_response)
 
 app = Flask(__name__)
 logger_config.configure_logger(app, __name__)
@@ -54,11 +44,6 @@ def get_one_card(id):
     )
     return response
 
-
-
-
-
-
 @app.route('/login', methods=['POST'])
 def login():
     logger.info(f'login - Start endpoint login')
@@ -79,11 +64,6 @@ def register():
      id = ApiUserController().post_user(request)
 
      return jsonify({"message": str(id)})
-
-
-
-
-
 
 
 
